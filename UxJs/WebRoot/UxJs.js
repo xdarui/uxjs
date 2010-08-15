@@ -131,12 +131,12 @@ Ux.applyIf = function(o,p){
 		createDom:function(c){
 		    if(c.el && c.el.xtype){
 		       c.dom = c.el.dom
-		    }else if(typeof c.el == 'string'){
+		    }else{
 		       c.dom = c.el
 		    }
 		     if(!c.dom){
 				c.dom = Ux.getBody()
-			}
+			 }
 		    var o,dom = (typeof c.dom == 'object')?c.dom:Ux.get(c.dom)
 			if(typeof c=='string' || c.tagtype=='string'){
 				o =  Ux.DOC.createTextNode(o);
@@ -856,7 +856,7 @@ Ux.ui.Panel=Ux.extend(Ux.ui.Form,{
 		var f = new Ux.ui.Form(c);
 		f.render(dom)
 		this.el = f.getEl();
-	//	this.renderItems(this.getBody())
+		this.renderItems(this.getBody())
 		var b = new Ux.ui.Component({
 			renderTo:this.el
 		})
@@ -878,19 +878,18 @@ Ux.ui.tabPanel=Ux.extend(Ux.ui.Form,{
 	activeTab:0,
 	_atived:function(){
 		var fun = this.events['actived'] || function(){}
-		   // arg = Array.prototype.slice.call(arguments,0)
-		
 		fun.apply(this,arguments)
 	},
 	active:function(d){
 		var node = d.parentNode.firstChild
-		var p=-1,html
+		var p= -1,html
 		do{
 			node.className = "tab_not_selected_title Form-title"
+			p++
 			if(node==d){
-				var n = this.panel_list.firstChild.firstChild
+				var n = this.panel_list.dom.firstChild.firstChild
 				for(var i=0;i<this.items.length;i++){
-					if(i== ++p){
+					if(i== p){
 						n.className = "tab_selected_panel"
 						n.style.display="block"
 						html = n.innerHTML
