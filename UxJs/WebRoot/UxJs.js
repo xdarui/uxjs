@@ -129,21 +129,26 @@ Ux.applyIf = function(o,p){
 		 * 生成结点
 		 */
 		createDom:function(c){
-			if(!c.dom){
+		    if(c.el && c.el.xtype){
+		       c.dom = c.el.dom
+		    }else if(typeof c.el == 'string'){
+		       c.dom = c.el
+		    }
+		     if(!c.dom){
 				c.dom = Ux.getBody()
 			}
-		    var dom = (typeof c.dom == 'object')?c.dom:Ux.get(c.dom)
-			var o
+		    var o,dom = (typeof c.dom == 'object')?c.dom:Ux.get(c.dom)
 			if(typeof c=='string' || c.tagtype=='string'){
 				o =  Ux.DOC.createTextNode(o);
 			}else{
 				o = document.createElement(c.tagtype || 'div')
 				o.id = c.id || Ux.id()
 			}
+			var regtext = /dom|el|ctype/
 			for(var attr in c){
 				if(attr=='cls'){
 					o.className = c['cls']
-				}else if(c[attr]!=undefined && attr!='dom'){
+				}else if(c[attr]!= undefined && !regtext.test(attr)){
 				   if(c.width){o.style.width=c.width}
 				   if(c.height){o.style.height=c.height}
 				   if (!!!o.setAttribute(attr,c[attr])){   
@@ -152,7 +157,7 @@ Ux.applyIf = function(o,p){
 				}
 			}
 			dom.appendChild(o)
-			return o
+			return new Ux.lib.Element(o);
 		},
 		/*
 		 * 动态库加载
@@ -550,10 +555,19 @@ Ux.lib.Event.prototype={
  * ------------------------------------------------------------------> dom <-------------------------------
  */
 //Ux.lib.Element
-
+Ux.lib.Element = function(dom){
+    this.get(dom)
+}
 Ux.lib.Element = Ux.extend(Ux.lib.Event,{
+    xtype:'element',
 	get:function(dom){
 		this.el = Ux.get(dom)
+	},
+	getEl:function(){
+	    return this
+	},
+	destory:function(){
+	    this.dom.parentNode.removeChild(this.dom)
 	},
 	addClass:function(cls){
 	    var me = this
@@ -562,8 +576,11 @@ Ux.lib.Element = Ux.extend(Ux.lib.Event,{
 	         me.addClass(c)
 	      })
 	    }else{
-	     this.el.className = this.el.className +  " " + cls
+	     this.dom.className = this.dom.className +  " " + cls
 	    }
+	},
+	firstChild:function(){
+	   return this.dom.firstChild
 	},
 	removeClass:function(cls){
 		this.el.className = this.el.className.replace(cls,"")
@@ -667,10 +684,9 @@ Ux.ui.Component=Ux.extend(Ux.Object,{
 			this.render(this.renderTo)
 			delete this.renderTo
 		}
-		this.el = new Ux.lib.Element();
 	},
    hide:function(){
-   	 this.addClass('hide')
+   	 this.el.addClass('hide')
 	 this.fire('hide')
    },
    getEl:function(){
@@ -678,9 +694,6 @@ Ux.ui.Component=Ux.extend(Ux.Object,{
    },
    getConfig:function(){
    	return Ux.getConfig(this);
-   },
-   addClass:function(cls){
-   	  this.el.className = this.el.className +  " " + cls
    },
    renderItems:function(el){
    	   var me  = this
@@ -711,13 +724,9 @@ Ux.ui.Component=Ux.extend(Ux.Object,{
    	   * 激活销毁事件
    	   */
    },
-   onDestory:function(){
-   	   this.el.parentNode.removeChild(this.el)
-   },
    render:function(el){
-   
-		this.el.dom  = Ux.createDom({
-			dom:el.dom,
+		this.el  = Ux.createDom({
+			el:el,
 			id:this.id,
 			width:this.width,
 			height:this.height,
@@ -725,13 +734,13 @@ Ux.ui.Component=Ux.extend(Ux.Object,{
 			innerHTML:this.html
 		})
 	   if(this.border){
-	        this.addClass('Component-border')
+	        this.el.addClass('Component-border')
 	   }
 	   if(this.extCls){
-	   	   this.addClass(this.extCls)
+	   	   this.el.addClass(this.extCls)
 	   }
 	   if(this.bg){
-	   	   this.addClass('Component-bg')
+	   	   this.el.addClass('Component-bg')
 	   }
 	   this.renderItems(this.getEl())
 	}
@@ -753,14 +762,17 @@ Ux.ui.Mask=Ux.extend(Ux.ui.Component,{
 		this.el.dom.firstChild.firstChild.innerHTML=msg
 		this.fire('updatemsg')
 	},
+	close:function(){
+	   this.el.destory()
+	},
 	render:function(){
 		this.fire(['render'])
 		var height,body,me = this
-			
+	      
 	    body = Ux.isIE? document.body:document.documentElement
 	    height = body.clientHeight > body.scrollHeight ? body.clientHeight : height = body.scrollHeight
 	    height = window.screen.availHeight > height ? window.screen.availHeight : height
-		me.el.dom = Ux.createDom({
+		me.el = Ux.createDom({
 			innerHTML:'<div class=\'loading-mask-bg\' style=\'width:'+ me.width +'px\'><div class=\'loading-mask\'>' + me.html + '</div></div>'
 		})
 		if(!Ux.isIE){
@@ -768,7 +780,7 @@ Ux.ui.Mask=Ux.extend(Ux.ui.Component,{
 		}
 		if (me.shadow) {
 			Ux.createDom({
-				dom: me.el.dom,
+				el: me.el,
 				cls: 'loading-mask-out',
 				height: height,
 				width: Ux.isIE ? document.body.clientWidth : document.documentElement.clientWidth
@@ -782,7 +794,7 @@ Ux.ui.Button=Ux.extend(Ux.ui.Component,{
 	xtype:'button',
 	render:function(dom){
 		this.el = Ux.createDom({
-			dom:dom,
+			el:dom,
 			id:this.id,
 			width:this.width,
 			height:this.height,
@@ -808,7 +820,7 @@ Ux.ui.Form = Ux.extend(Ux.ui.Component,{
 	xtype:'form',
 	singel:false,
 	getBody:function(){
-		return this.single?this.el:this.getEl().firstChild.nextSibling;
+		return this.single?this.el.dom:this.getEl().dom.firstChild.nextSibling;
 	},
 	render:function(dom){
 		var c = this.getConfig()
@@ -830,8 +842,7 @@ Ux.ui.Form = Ux.extend(Ux.ui.Component,{
 		var form = new Ux.ui.Component(c)
 	    	form.render(dom)
 		this.el = form.getEl();
-		this.renderItems(this.getBody())
-		//this.getBody.
+       this.renderItems(this.getBody())
 	}
 })
 Ux.reg('form',Ux.ui.Form)
@@ -845,11 +856,11 @@ Ux.ui.Panel=Ux.extend(Ux.ui.Form,{
 		var f = new Ux.ui.Form(c);
 		f.render(dom)
 		this.el = f.getEl();
-		this.renderItems(this.getBody())
+	//	this.renderItems(this.getBody())
 		var b = new Ux.ui.Component({
 			renderTo:this.el
 		})
-		b.addClass('Form-buttom align-' + this.buttonAlign)
+		b.getEl().addClass('Form-buttom align-' + this.buttonAlign)
 		
 		for(var btn,i=0;btn=this.buttons[i++];){
 			btn.renderTo = b.getEl()
@@ -859,39 +870,6 @@ Ux.ui.Panel=Ux.extend(Ux.ui.Form,{
 	}
 })
 Ux.reg('panel',Ux.ui.Panel)
-Ux.ui.Form = Ux.extend(Ux.ui.Component,{
-	title:'no title',
-	border:true,
-	xtype:'form',
-	singel:false,
-	getBody:function(){
-		return this.single?this.el:this.getEl().firstChild.nextSibling;
-	},
-	render:function(dom){
-		var c = this.getConfig()
-		if(!this.single){
-			c.items=[{
-			bg:false,
-			extCls:'Form-title',
-			html:this.title
-		             },{
-			extCls:'Form-body',
-		    html:this.html
-		             }]
-			delete c.html
-			c.extCls='From'		 
-		}else{
-			c.items=[]
-			c.extCls='singleForm'
-		}
-		var form = new Ux.ui.Component(c)
-	    	form.render(dom)
-		this.el = form.getEl();
-		this.renderItems(this.getBody())
-		//this.getBody.
-	}
-})
-Ux.reg('form',Ux.ui.Form)
 
 
 Ux.ui.tabPanel=Ux.extend(Ux.ui.Form,{
@@ -909,11 +887,10 @@ Ux.ui.tabPanel=Ux.extend(Ux.ui.Form,{
 		var p=-1,html
 		do{
 			node.className = "tab_not_selected_title Form-title"
-			p++
 			if(node==d){
 				var n = this.panel_list.firstChild.firstChild
 				for(var i=0;i<this.items.length;i++){
-					if(i==p){
+					if(i== ++p){
 						n.className = "tab_selected_panel"
 						n.style.display="block"
 						html = n.innerHTML
@@ -932,26 +909,26 @@ Ux.ui.tabPanel=Ux.extend(Ux.ui.Form,{
 			var c = Ux.createDom({
 			   ctype:'li',
 			   id:o.id||Ux.id(),
-			   dom:this.title_list.firstChild,
+			   el:this.title_list.dom.firstChild,
 			   innerHTML: o.title
 		     });
-			 c.onclick=function(){
+			 c.dom.onclick=function(){
 			 	me.active(this)
 				me._atived(this.id,this.innerHTML)
 			 }
 			 if(i==this.activeTab){
-			 	c.className = "tab_selected_title"
+			 	c.addClass("tab_selected_title")
 			 }else{
-			 	c.className = "tab_not_selected_title"
+			 	c.addClass("tab_not_selected_title")
 			 }
-			 c.className= c.className +  " Form-title"
-			 var c = Ux.createDom({
+			 c.addClass("Form-title")
+			 var c= Ux.createDom({
 			   tagtype:'li',
-			   dom:this.panel_list.firstChild,
+			   el:this.panel_list.dom.firstChild,
 			   cls: "tab_selected_panel"
 		     });
 			 if(i!=this.activeTab){
-			 	c.style.display="none"
+			 	c.dom.style.display="none"
 			 }
 			 o.single=true
 			 o.ownerCt = this
@@ -967,22 +944,22 @@ Ux.ui.tabPanel=Ux.extend(Ux.ui.Form,{
 		this.el = p.getEl()
 		this.title_list = Ux.createDom({
 			wdith:c.width,
-			dom:p.getEl(),
+			el:p.getEl(),
 			cls:"tab_title"
 		});
 		c = Ux.createDom({
 			tagtype:'ul',
 			width:c.width,
-			dom:this.title_list,
+			el:this.title_list,
 			cls:"tab_ul_title"
 		});
 		this.panel_list = Ux.createDom({
 			wdith:c.width,
-			dom:p.getEl()
+			el:p.getEl()
 		});
 	   c = Ux.createDom({
 			tagtype:'ul',
-			dom:this.panel_list,
+			el:this.panel_list,
 			cls:"tab_ul_panel"
 		});
 	   this.renderItems(this.el)
@@ -1009,14 +986,14 @@ Ux.ui.Field=Ux.extend(Ux.ui.Component,{
 		this.msgel.innerHTML = err
 	},
 	render:function(el){
-		this.el.dom  = Ux.createDom({
-			dom:el.dom
+		this.el  = Ux.createDom({
+			el:el
 		})
 	    Ux.createDom({
-			dom:this.el.dom
+			el:this.el
 		})
 		this.msgel = Ux.createDom({
-			dom:this.el,
+			el:this.el,
 			cls:'hide'
 		})
 	}
