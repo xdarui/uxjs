@@ -1,0 +1,55 @@
+body{
+  background:#4D8BE7;
+  margin:0px;
+  padding-top:30px;
+  text-align:center;	
+ }
+a {}
+a:link {
+	text-decoration: none;
+}
+a:visited{
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	text-decoration: underline;
+}
+
+#buttons{
+  height:73px;
+  line-height:73px;
+  background:url(images/silder_bg.jpg)  repeat-x ;
+  padding-top:17px;
+  *padding-top:20px;
+  text-align:left;
+}
+#hide_button{
+   margin-top:3px;
+   width:98px;
+   height:29px;
+   position:absolute;
+   background:url(images/button_show.jpg);
+   *margin-top:0px;
+   left:-98px;
+ }
+#buttons ul{
+	list-style-type:none;
+	height:29px;
+	margin-top:-11px;
+	*margin-top:0px;
+		}
+#buttons ul li{
+	display:inline;
+	height:29px;
+	margin-left:10px;
+	}
+img{
+	border:0px;
+	}
+	
+.samples{
+	padding:50px
+}
