@@ -5,7 +5,7 @@
  * xdarui@xdarui.com
  * 
  */
-
+ 
 Ux = {
 	version:'1.0',
 	author:'xdarui'

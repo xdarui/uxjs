@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="UxJs"
+  id="myeclipse.1281888710821"
+  context-root="/UxJs"
+  j2ee-spec="1.4"
+  archive="UxJs.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
