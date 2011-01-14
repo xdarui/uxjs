@@ -2,7 +2,7 @@
   if(!Ux){
        Ux = window.Ux = {};
    }
-  //浮点数相加
+ //浮点数相加
   Ux.FloatMath = {
      pow:function( arg1 , arg2 ){
          if( arg2 >= 0 ){
