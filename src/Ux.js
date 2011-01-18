@@ -22,7 +22,7 @@
    Ux.merge(Ux,{
       version:'1.0.0.1',
       hasClass:function(cls){
-         return (this.length==1) && ( new RegExp("(^|\\s)"+ cls +"($|\\s)","i").test(this.el.className) );
+         return (this.length==1) &&  ( -1 != this.el.className.indexOf(cls) );
       },
       html:function(h){
       
@@ -68,7 +68,7 @@
                 var el = [];
                 var elo = Ux.getByTagName("*");
                 for(var i=0;i<elo.length;i++){
-                    if(elo[i].className && new RegExp("(^|\\s)"+ cls +"($|\\s)","i").test(elo[i].className)){
+                    if(elo[i].className && -1 != elo[i].className.indexOf(o)){
                       el.push(elo[i])
                     }
                 }
