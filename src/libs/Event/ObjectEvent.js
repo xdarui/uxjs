@@ -16,7 +16,9 @@
                if( obj ){
                     this.target = obj;
                     obj.EventManager = this;
-               }
+               }else{
+                    this.target = this;
+                 }
               if(obj && obj.events){
                    var evs = obj.events;
                    for(var o in evs){

@@ -6,21 +6,23 @@
   <body>
     <script>
     window.onload = function(){
-        var o = {};
-         var e = new Ux.Event.ObjectEvent();
-         e.bind(o);
-         e.on('test',function(){
+        var o = {
+              title:'A Object Event Test'
+           };
+         new Ux.Event.ObjectEvent().bind(o);
+        // e.bind(o);
+          o.EventManager.on('test',function(){
                 alert("fire event test");
            });
           o.EventManager.on("test",function(){
                alert("fire event test again");
            });
-         e.fire("test");
-         e.un("test");
-         e.on("test",function(){
-              alert("fire event test again and again")
+         o.EventManager.fire("test");
+         o.EventManager.un("test");
+         o.EventManager.on("test",function(){
+              alert(this.title + "\n")
           });
-         e.fire("test");
+         o.EventManager.fire("test");
      }
     </script>
   </body>
