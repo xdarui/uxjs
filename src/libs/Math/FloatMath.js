@@ -1,14 +1,13 @@
 (function(Ux){
-  if(!Ux){
-       Ux = window.Ux = {};
-   }
+  if(!Ux){ Ux = window.Ux = {}; }
+  if(!Ux.Math){ Ux.Math = {} }
  //浮点数相加
-  Ux.FloatMath = {
+  Ux.Math.FloatMath = {
      pow:function( arg1 , arg2 ){
          if( arg2 >= 0 ){
             return Math.pow( arg1 , arg2 );
          }else{
-            return Ux.FloatMath.div( 1 , Math.pow( arg1 , Math.abs( arg2 ) ) );
+            return Ux.Math.FloatMath.div( 1 , Math.pow( arg1 , Math.abs( arg2 ) ) );
          }
      },
      add:function(arg1,arg2){
@@ -16,11 +15,11 @@
           try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
           try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
           m=Math.pow(10,Math.max(r1,r2));
-          return (Ux.FloatMath.mul(arg1,m)+Ux.FloatMath.mul(arg2,m))/m;
+          return (Ux.Math.FloatMath.mul(arg1,m)+Ux.Math.FloatMath.mul(arg2,m))/m;
     },
   //浮点数相减
     sbt:function(arg1,arg2){
-     return Ux.FloatMath.add(arg1,-arg2);
+     return Ux.Math.FloatMath.add(arg1,-arg2);
     },
 
  //浮点数相乘
@@ -33,7 +32,7 @@
 
  //浮点数除
    div:function(arg1,arg2){
-      return Ux.FloatMath.mul(arg1,1/arg2);
+      return Ux.Math.FloatMath.mul(arg1,1/arg2);
    }
  }
 }(window.Ux));
