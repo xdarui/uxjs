@@ -1,13 +1,15 @@
 Uxjs
 ====
 
+Uxjs is a usable and dipartable javascript collection
+
 Author : Darrel.dew
 E-mail/MSN : xdarui@xdarui.com
 
 Homepage and documentation: http://uxjs.net/
 
 If you wanna to join with me , please email to me ! 
----------------------------------------------------------
+---------------------------------------------------
 
 Installation and Dependencies
 -----------------------------
@@ -26,13 +28,13 @@ or
 
 to get the latest copy of Uxjs.
 
-    Linux:
-    ------
+Example
+-------
 
-        you can run the examples directly.
+All examples locate in uxjs/examples/
 
-    Windows
-    -------
+Warning:
 
-        1. delete the symbol link file "src"
-        2. copy the directory src to examples .
+For windows system
+1. remove the symbol link file 'uxjs/examples/src'
+2. copy the folder 'uxjs/src/' to 'uxjs/examples/src/'

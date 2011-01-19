@@ -1,0 +1,23 @@
+body {
+    font-size: 12px;
+    background: #eeeeff;
+}
+
+h1,h2,h3,h4,h5 {
+    margin-top:0;
+}
+pre {
+    padding: 5px;
+    border: 1px solid #000;
+    background:#fff;
+}
+
+ul {
+    padding: 5px;
+    margin-top:0px;
+    border: 1px solid #000;
+    background:#fff;
+}
+ul li {
+    list-style:none;
+}
