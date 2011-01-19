@@ -1,29 +1,32 @@
-README
+Uxjs
+====
 
 Author : Darrel.dew
-E-mail : xdarui@xdarui.com
-Msn    : xdarui@xdarui.com
+E-mail/MSN : xdarui@xdarui.com
+
+Homepage and documentation: http://uxjs.net/
 
 If you wanna to join with me , please email to me ! 
 ---------------------------------------------------------
 
-For Linux User
+Installation and Dependencies
+-----------------------------
 
-If your operation system  is linux or linux like system , you need to use 
-
+you can try: 
+::
+git://github.com/xdarui/uxjs.git
+or
+::
 svn co http://uxjs.googlecode.com/svn/trunk
 
-to check out the code, and run the examples directly.
+to get a copy of the latest code.
 
-----------------------------------------------------------
+Linux:
+------
+you can run the examples directly.
 
-For Windows
+Windows
+-------
 
-At first , you need to check out the code from the  Subversion by this url:
-
-  http://uxjs.googlecode.com/svn/trunk
-
-Second , delete the symbol link file "src" , and copy the directory src to examples .
-
-==
-funnng@qq.com
+1. delete the symbol link file "src"
+2. copy the directory src to examples .
