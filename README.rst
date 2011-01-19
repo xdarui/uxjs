@@ -12,21 +12,27 @@ If you wanna to join with me , please email to me !
 Installation and Dependencies
 -----------------------------
 
-you can try: 
+you can try:
+
 ::
-git://github.com/xdarui/uxjs.git
+
+    git://github.com/xdarui/uxjs.git
+
 or
+
 ::
-svn co http://uxjs.googlecode.com/svn/trunk
 
-to get a copy of the latest code.
+    svn co http://uxjs.googlecode.com/svn/trunk
 
-Linux:
-------
-you can run the examples directly.
+to get the latest copy of Uxjs.
 
-Windows
--------
+    Linux:
+    ------
 
-1. delete the symbol link file "src"
-2. copy the directory src to examples .
+        you can run the examples directly.
+
+    Windows
+    -------
+
+        1. delete the symbol link file "src"
+        2. copy the directory src to examples .
