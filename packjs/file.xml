@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="test" basedir=".">
+    <target name="js-test">
+    <concat destfile="${basedir}/ux.js" encoding="utf-8" append="false">
+        	<path path="${basedir}/ux.core-min.js" />
+		<path path="${basedir}/ux.test.js" />
+    	</concat>
+    </target>
+</project>
