@@ -24,3 +24,6 @@ At first , you need to check out the code from the  Subversion by this url:
   http://uxjs.googlecode.com/svn/trunk
 
 Second , delete the symbol link file "src" , and copy the directory src to examples .
+
+==
+funnng@qq.com
