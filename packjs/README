@@ -2,6 +2,10 @@ Author Darrel
 Msn : xdarui@xdarui.com
 mail: darui.xu@qunar.com
 
+Important ! 
+ 
+You need to down load the Apache-Ant software and add the Ant directory into PATH
+
 useage :
         packjs file.xml
         minijs file.js file.min.js
