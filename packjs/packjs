@@ -2,9 +2,10 @@
 
 from sys import argv
 import os
-import re
+from libxml import BuildXml
 
-VERSION = '1.0.0.1'
+VERSION = '1.0.1.1'
+
 if argv[1] != '--' and 0 != argv[1].find("--") :
 	if len(argv) < 2 :
 		print """Not enough parameters !
@@ -15,8 +16,19 @@ use -- help for more informations"""
 			if len(argv) == 3 :
 				cmdline = ("ant -buildfile %s %s") % (argv[1],argv[2])	
 			else:
-	                        cmdline = ("ant -buildfile %s ") % (argv[1])
-			os.system(cmdline)
+				xml = BuildXml(argv[1])
+				xml.getProject()
+				if not xml.target:
+					print "Error : xml file " + argv[1] + " have no target !"
+					exit()
+	                        cmdline = ("ant -buildfile %s %s") % (argv[1],xml.target)
+			os.system( cmdline )
+			desc = xml.getDest()
+			cmdline = ("minjs.py %s %s") % (desc,desc)
+			#lib =  os.path.dirname(__file__) +  "/lib/yuicompressor-2.4.2.jar"
+			#cmdline = ("java -jar %s --type js --charset utf-8 -o %s %s") % ( lib,desc,desc )
+			os.system( cmdline )
+			print "done!"
 else:
 	global operation 
         operation = argv[1]
