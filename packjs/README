@@ -3,8 +3,6 @@ Msn : xdarui@xdarui.com
 mail: darui.xu@qunar.com
 
 useage :
- 
-   packjs file.xml target
-   
-   packjs filexml  -all 
-   packjs file1.js file2.js file3.js
+        packjs file.xml
+        minijs file.js file.min.js
+        minijs file.js        
