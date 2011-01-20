@@ -8,6 +8,7 @@ h1,h2,h3,h4,h5 {
 }
 pre {
     padding: 5px;
+    margin: 5px;
     border: 1px solid #000;
     background:#fff;
 }
@@ -21,3 +22,4 @@ ul {
 ul li {
     list-style:none;
 }
+

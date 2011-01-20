@@ -8,8 +8,7 @@ E-mail/MSN : xdarui@xdarui.com
 
 Homepage and documentation: http://uxjs.net/
 
-If you wanna to join with me , please email to me ! 
----------------------------------------------------
+please email to me if you have anything about Uxjs!
 
 Installation and Dependencies
 -----------------------------
@@ -36,5 +35,7 @@ All examples locate in uxjs/examples/
 Warning:
 
 For windows system
+
 1. remove the symbol link file 'uxjs/examples/src'
+
 2. copy the folder 'uxjs/src/' to 'uxjs/examples/src/'
