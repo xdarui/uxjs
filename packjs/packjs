@@ -12,7 +12,7 @@ if argv[1] != '--' and 0 != argv[1].find("--") :
 use -- help for more informations"""
         else:
 		global cmdline
-		if argv[1].find(".xml") != '-1':
+		if argv[1][-4:] != '.xml':
 			if len(argv) == 3 :
 				cmdline = ("ant -buildfile %s %s") % (argv[1],argv[2])	
 			else:
