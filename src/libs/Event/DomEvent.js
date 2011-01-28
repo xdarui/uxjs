@@ -9,13 +9,13 @@
  
    ux.Event.DomEvent = function(dom){
    	this.dom = this.isDom(dom)?dom:dom.dom;
-	if(!isDom(this.Dom)){
-		throw "Dom Error";
+	if(!this.isDom(this.dom)){
+		alert("Dom Error")
 	}
    }
-   ux.Event.prototype = {
+   ux.Event.DomEvent.prototype = {
         isDom:function(dom){
-            if(!(/Object\sHTML/i).test(Object.prototype.toString.call(dom))){
+            if(!dom || dom.nodeType != 1){
                  return false;
              }
 	    return true;
