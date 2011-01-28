@@ -21,10 +21,11 @@
 	    return true;
         },
 	on:function(e,fun){
+		var me = this;
 		if( document.all ){
-			return this.dom.attachEvent( "on" + e , fun );
+			return this.dom.attachEvent( "on" + e ,function(){ fun.call(me);} );
 		}else{
-			return this.dom.addEventListener(e,fun,false);
+			return this.dom.addEventListener(e,function(){ fun.call(me);},false);
 		}
 	},
 	un:function(e,fun){
@@ -43,6 +44,14 @@
 			evt.initEvent(e,true,true);
 			return !this.dom.dispatchEvent( evt );
 		}
+	},
+	change:function(fun){
+		var ev = document.all ?'input':'propertychange';
+		var me = this;
+		this.on(ev,function(){
+			fun.call(me);
+		});
+			
 	}
     }    
 })(window.Ux)
